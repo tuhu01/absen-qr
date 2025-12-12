@@ -1,0 +1,50 @@
+═══════════════════════════════════════════════════════════════
+  INSTRUKSI RESTART PHP-FPM DAN NGINX
+═══════════════════════════════════════════════════════════════
+
+Route /login sudah diperbaiki, tapi perlu restart services agar 
+perubahan Routes.php diterapkan.
+
+═══════════════════════════════════════════════════════════════
+  CARA RESTART:
+═══════════════════════════════════════════════════════════════
+
+1. Buka terminal
+
+2. Jalankan perintah berikut (akan meminta password):
+
+   sudo systemctl restart php8.3-fpm
+   sudo systemctl restart nginx
+
+   ATAU restart sekaligus:
+
+   sudo systemctl restart php8.3-fpm nginx
+
+3. Setelah restart, test akses:
+
+   http://172.16.11.102/login
+
+   Seharusnya menampilkan FORM LOGIN, bukan halaman scan QR.
+
+═══════════════════════════════════════════════════════════════
+  ALTERNATIF:
+═══════════════════════════════════════════════════════════════
+
+Jika tidak bisa restart, coba reload:
+
+   sudo systemctl reload php8.3-fpm
+   sudo systemctl reload nginx
+
+═══════════════════════════════════════════════════════════════
+  VERIFIKASI:
+═══════════════════════════════════════════════════════════════
+
+Cek status services:
+
+   sudo systemctl status php8.3-fpm
+   sudo systemctl status nginx
+
+Keduanya harus menunjukkan: "active (running)"
+
+═══════════════════════════════════════════════════════════════
+

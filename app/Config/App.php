@@ -21,9 +21,9 @@ class App extends BaseConfig
      * explicitly and never rely on auto-guessing, especially in production
      * environments.
      */
-    public string $baseURL = 'http://localhost/absensi-sekolah-qr-code/';
+    public string $baseURL = 'https://192.168.137.159/';
     // Using php spark serve
-    // public string $baseURL = 'http://localhost:8080/';
+    // public string $baseURL = 'https://192.168.100.151/';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
@@ -66,7 +66,7 @@ class App extends BaseConfig
      *
      * WARNING: If you set this to 'PATH_INFO', URIs will always be URL-decoded!
      */
-    public string $uriProtocol = 'PATH_INFO';
+   public string $uriProtocol = 'REQUEST_URI';
 
     /**
      * --------------------------------------------------------------------------

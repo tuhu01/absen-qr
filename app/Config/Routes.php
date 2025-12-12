@@ -16,12 +16,12 @@ $routes->setDefaultNamespace('App\Controllers');
 $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
-$routes->set404Override();
+// $routes->set404Override(); // DISABLED - menyebabkan route tidak match
 // The Auto Routing (Legacy) is very dangerous. It is easy to create vulnerable apps
 // where controller filters or CSRF protection are bypassed.
 // If you don't want to define all routes, please use the Auto Routing (Improved).
 // Set `$autoRoutesImproved` to true in `app/Config/Feature.php` and set the following to true.
-// $routes->setAutoRoute(false);
+$routes->setAutoRoute(false); // DISABLED auto routing untuk memastikan route eksplisit digunakan
 
 /*
  * --------------------------------------------------------------------
@@ -32,8 +32,15 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
-// Scan
-$routes->get('/', 'Scan::index');
+// Auth Routes (Login/Logout) - HARUS SEBELUM ROUTE LAINNYA
+// Route login langsung menggunakan Myth\Auth controller dengan priority tinggi
+// Menggunakan exact match untuk memastikan route login match dengan benar
+$routes->get('login', '\Myth\Auth\Controllers\AuthController::login', ['as' => 'login']);
+$routes->post('login', '\Myth\Auth\Controllers\AuthController::attemptLogin');
+$routes->get('logout', '\Myth\Auth\Controllers\AuthController::logout', ['as' => 'logout']);
+
+// Scan - HARUS SETELAH route login
+$routes->get('/', 'Scan::index', ['priority' => 1]);
 
 $routes->group('scan', function (RouteCollection $routes) {
    $routes->get('', 'Scan::index');
@@ -42,8 +49,6 @@ $routes->group('scan', function (RouteCollection $routes) {
 
    $routes->post('cek', 'Scan::cekKode');
 });
-
-
 
 // Admin
 $routes->group('admin', function (RouteCollection $routes) {

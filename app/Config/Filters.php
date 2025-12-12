@@ -58,7 +58,7 @@ class Filters extends BaseFilters
      */
     public array $required = [
         'before' => [
-            'forcehttps', // Force Global Secure Requests
+            // 'forcehttps', // Force Global Secure Requests - DISABLED untuk HTTP
             'pagecache',  // Web Page Caching
         ],
         'after' => [
@@ -80,7 +80,7 @@ class Filters extends BaseFilters
     public array $globals = [
         'before' => [
             'honeypot',
-            'login'
+            // 'login' // DISABLED - hanya untuk route tertentu, bukan global
             // 'csrf',
             // 'invalidchars',
         ],
@@ -118,8 +118,10 @@ class Filters extends BaseFilters
     public array $filters = [
         'login' => [
             'before' => [
+                'admin',
                 'admin/',
                 'admin/*',
+                'register',
                 'register/',
             ]
         ]
