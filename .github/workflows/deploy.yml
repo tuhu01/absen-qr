@@ -1,0 +1,25 @@
+name: Deploy to Server 2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy to Server 2
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.SERVER2_HOST }}
+        username: ${{ secrets.SERVER2_USER }}
+        key: ${{ secrets.SERVER2_SSH_KEY }}
+        port: ${{ secrets.SERVER2_PORT }}
+        script: |
+          cd /var/www/absen-qr
+          git pull origin main
