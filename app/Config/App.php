@@ -21,9 +21,9 @@ class App extends BaseConfig
      * explicitly and never rely on auto-guessing, especially in production
      * environments.
      */
-    public string $baseURL = 'https://192.168.137.159/';
+    public string $baseURL = 'https://10.103.79.162/';
     // Using php spark serve
-    // public string $baseURL = 'https://192.168.100.151/';
+    // public string $baseURL = 'https://10.103.79.162/';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.

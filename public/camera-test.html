@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Test</title>
+</head>
+<body>
+    <h1>Camera Access Test</h1>
+    <button id="testCamera">Test Camera Access</button>
+    <br><br>
+    <video id="cameraFeed" autoplay style="border: 1px solid black;"></video>
+    <br>
+    <div id="status"></div>
+
+    <script>
+        document.getElementById('testCamera').addEventListener('click', async function() {
+            const status = document.getElementById('status');
+            const video = document.getElementById('cameraFeed');
+
+            try {
+                status.textContent = 'Requesting camera access...';
+
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: false
+                });
+
+                status.textContent = 'Camera access granted! Stream available.';
+                video.srcObject = stream;
+
+                // List available devices
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+                status.textContent += `\nFound ${videoDevices.length} camera(s):`;
+                videoDevices.forEach((device, index) => {
+                    status.textContent += `\n${index + 1}. ${device.label || 'Camera ' + (index + 1)} (ID: ${device.deviceId})`;
+                });
+
+            } catch (error) {
+                status.textContent = `Error accessing camera: ${error.message}`;
+                console.error('Camera access error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
